@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="./assets/favicon.ico" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Kalvin Valiant</title>
+    <style type="text/tailwindcss">
+      body ::-webkit-scrollbar {
+        @apply w-2;
+      }
+      body ::-webkit-scrollbar-track {
+        @apply bg-black my-16;
+      }
+      body ::-webkit-scrollbar-thumb {
+        @apply bg-gray-200 hover:bg-white rounded-full;
+      }
+      div ::-webkit-scrollbar-track {
+        @apply bg-black my-0;
+      }
+      .skill-item {
+        @apply w-fit bg-white rounded-full px-4 my-1 mx-1 font-semibold;
+      }
+      .experience-summary {
+        @apply text-white select-none flex flex-col mb-4;
+      }
+      .experience-summary .experience-title {
+        @apply text-2xl font-semibold;
+      }
+      .experience-summary div {
+        @apply flex justify-between;
+      }
+      .experience-summary .experience-subtitle {
+        @apply text-white select-none flex flex-col text-sm;
+      }
+      .experience-expand {
+        @apply mt-3 p-2 text-sm text-justify bg-slate-200 rounded-lg border border-white;
+      }
+      .sub-experience-title {
+        @apply text-xl font-semibold;
+      }
+      .project-card {
+        @apply max-w-sm sm:max-w-xs lg:max-w-sm;
+      }
+      .project-card summary {
+        @apply h-56 text-white select-none flex flex-col justify-center rounded-lg border border-white;
+      }
+      .project-card summary div h4 {
+        @apply text-2xl sm:text-xl;
+      }
+      .project-card summary div h5 {
+        @apply text-xl sm:text-lg text-gray-400;
+      }
+      .project-card summary div p {
+        @apply mb-5 text-sm sm:text-xs text-gray-400;
+      }
+      .project-card summary div a {
+        @apply items-center py-2 px-5 font-medium text-sm text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300;
+      }
+      .project-card-expand {
+        @apply max-w-sm mt-2 bg-slate-200 rounded-lg border border-white;
+      }
+      .project-card-expand p {
+        @apply p-2 font-normal;
+      }
+    </style>
+
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            fontSize: {
+              "1.5xl": ["22px"],
+              "2.5xl": ["27px"],
+              "3.5xl": ["33px"],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+  <body class="bg-black">
+    <!-- Navbar -->
+    <nav class="bg-gray-800 absolute top-0 w-screen z-[99999]" id="header">
+      <div class="mx-auto max-w-7xl px-2 sm:px-6 sm:px-8">
+        <div class="relative flex h-16 items-center justify-between">
+          <!-- Dekstop menu -->
+          <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-between">
+            <div class="flex flex-shrink-0 items-center h-9">
+              <text class="w-auto mt-auto text-gray-300 text-3xl font-semibold">KValiant</text>
+              <text class="hidden sm:block ml-2 mt-auto w-auto text-gray-300 text-md">Portfolio Page</text>
+            </div>
+            <div class="hidden sm:ml-6 sm:block">
+              <div class="flex space-x-2 lg:space-x-4">
+                <!-- Current: "bg-gray-900 text-white", Default: "text-gray-300 hover:bg-gray-700 hover:text-white" -->
+                <a href="#home" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                <a href="#skills" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Skills</a>
+                <a href="#experience" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Experince</a>
+                <a href="#education" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Education</a>
+                <a href="#projects" class="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Projects</a>
+                <a href="#contact" class="bg-blue-800 text-gray-300 hover:bg-blue-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+              </div>
+            </div>
+          </div>
+          <!-- end of Dekstop menu -->
+          <!-- Mobile menu button-->
+          <div class="absolute inset-y-0 right-0 flex items-center sm:hidden">
+            <button id="hamburger" type="button" class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+              <span class="sr-only">Open main menu</span>
+              <!-- Icon when menu is closed -->
+              <svg id="open-navbar-icon" class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+              </svg>
+              <!-- Icon when menu is open -->
+              <svg id="close-navbar-icon" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+          <!-- end of Mobile menu button-->
+        </div>
+      </div>
+
+      <!-- Mobile menu, show/hide based on menu state. -->
+      <div class="sm:hidden hidden" id="mobile-menu">
+        <div class="space-y-1 px-2 pt-2 pb-3">
+          <a href="#home" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+          <a href="#skills" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Skills</a>
+          <a href="#experience" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Experince</a>
+          <a href="#education" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Education</a>
+          <a href="#projects" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Projects</a>
+          <a href="#contact" class="bg-blue-800 text-gray-300 hover:bg-blue-700 text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+        </div>
+      </div>
+    </nav>
+    <!-- end of Navbar -->
+    <section class="h-screen overflow-y-scroll snap-y snap-mandatory">
+      <section class="px-8 lg:w-2/4 mx-auto flex flex-col justify-center items-center">
+        <!-- Introduction -->
+        <section id="home" class="min-h-[35rem] max-w-[35rem] h-screen bg-black flex justify-center items-left flex-col snap-center">
+          <span class="text-white text-lg sm:text-xl">Greetings, I'm</span>
+          <h1 class="text-white text-5xl sm:text-7xl">Kalvin Valiant</h1>
+          <h3 class="mt-4 text-white text-xl sm:text-xl">Full Stack Software Developer & Mobile Developer</h3>
+          <div class="mt-4">
+            <p class="text-white text-justify text-lg sm:text-md">
+              Full Stack Software Developer & Mobile Developer, my background is BSc (Hons.) in Computer Science degree, and full stack web developer certificate from Udacity, inc. My experience includes Full Stack Software Developer Intern
+              at YCP Solidiance and various leadership positions in student organizations such as deputy head of IT department (a department of 24 committees) and Google DSC Leads.
+            </p>
+          </div>
+        </section>
+        <!-- end of Introduction -->
+        <!-- Skills -->
+        <section id="skills" class="min-h-[35rem] h-screen -pt-10 bg-black snap-center">
+          <div class="h-full flex justify-center items-center flex-col">
+            <div class="w-fit">
+              <h2 class="text-white text-5xl sm:text-5xl">Skills</h2>
+              <h3 class="text-white text-xl sm:text-2xl font-medium">Development</h3>
+              <div class="mt-2 sm:max-w-[32rem] flex flex-wrap">
+                <div class="skill-item">ReactJS</div>
+                <div class="skill-item">Express.js</div>
+                <div class="skill-item">Node.js</div>
+                <div class="skill-item">MongoDB</div>
+                <div class="skill-item">React Native</div>
+                <div class="skill-item">Flutter 1.0</div>
+                <div class="skill-item">Flask Python</div>
+                <div class="skill-item">PostgreSQL</div>
+                <div class="skill-item">Firebase</div>
+                <div class="skill-item">styled-components</div>
+                <div class="skill-item">Bootstrap</div>
+                <div class="skill-item">Tailwind CSS</div>
+              </div>
+              <h3 class="text-white text-xl sm:text-2xl font-medium">Programming Language</h3>
+              <div class="mt-2 max-w-[35rem] flex flex-wrap">
+                <div class="skill-item">HTML</div>
+                <div class="skill-item">CSS</div>
+                <div class="skill-item">JavaScript</div>
+                <div class="skill-item">Python</div>
+                <div class="skill-item">C++</div>
+                <div class="skill-item">C</div>
+                <div class="skill-item">Java</div>
+              </div>
+              <h3 class="text-white text-xl sm:text-2xl font-medium">Deployment</h3>
+              <div class="mt-2 max-w-[35rem] flex flex-wrap">
+                <div class="skill-item">Heroku</div>
+                <div class="skill-item">Docker</div>
+                <div class="skill-item">Kubernetes</div>
+              </div>
+              <h3 class="text-white text-xl sm:text-2xl font-medium">Others</h3>
+              <div class="mt-2 max-w-[35rem] flex flex-wrap">
+                <div class="skill-item">Unreal Engine</div>
+                <div class="skill-item">Microsoft Power Apps</div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- end of Skills -->
+        <!-- Experience -->
+        <section id="experience" class="min-h-[35rem] h-screen bg-black snap-center lg:p-12">
+          <div class="h-full flex justify-center items-center flex-col">
+            <div>
+              <h2 class="text-white text-5xl sm:text-5xl mb-6">Experience</h2>
+              <!-- Experience -->
+              <div class="h-[30rem] lg:h-[30rem] md:w-full md:max-w-[35rem] pr-4 overflow-y-scroll">
+                <!-- PPID -->
+                <div class="">
+                  <div class="">
+                    <details class="">
+                      <summary class="experience-summary">
+                        <span class="experience-title">Deputy Head of IT and Digital Innovation Department</span>
+                        <div>
+                          <span class="experience-subtitle">Overseas Indonesian Students' Alliance Association, Remote</span>
+                          <span class="experience-subtitle">09/2021 - 09/2022</span>
+                        </div>
+                      </summary>
+                      <div class="experience-expand">
+                        <p>Co-managed a department of 24 committees split between 5 divisions (UI/ UX, Web administration, Cyber Security, Live Streaming, and Application).</p>
+                        <ul class="ml-5 list-disc">
+                          <li>Strategically managed the 5 developer UI/UX division to design and develop the ppi.id Website</li>
+                          <li>Directly and strategically assisted the 3 engineer Web administration division operations in maintaining the organization’s and branch organization’s web administration</li>
+                          <li>Successfully restructured the 7 committee Live Streaming division</li>
+                        </ul>
+                      </div>
+                    </details>
+                  </div>
+                  <div class="">
+                    <details class="">
+                      <summary class="ml-5 experience-summary">
+                        <span class="sub-experience-title">Head of Website and Admin Sub Sector</span>
+                        <div>
+                          <span class="experience-subtitle">Overseas Indonesian Students' Alliance Association, Remote</span>
+                          <span class="experience-subtitle">08/2021 – 09/2021</span>
+                        </div>
+                      </summary>
+                      <div class="experience-expand">
+                        <p>Held the position for 1 month before promoted to Deputy Head of IT and Digital Innovation Department</p>
+                      </div>
+                    </details>
+                  </div>
+                  <div class="">
+                    <details class="">
+                      <summary class="ml-5 experience-summary">
+                        <span class="sub-experience-title">Creative Content Coordinator (For Event)</span>
+                        <div>
+                          <span class="experience-subtitle">Overseas Indonesian Students' Alliance Association, Remote</span>
+                          <span class="experience-subtitle">05/2021 – 05/2021</span>
+                        </div>
+                      </summary>
+                      <div class="experience-expand">
+                        <ul class="ml-5 list-disc">
+                          <li>Lead a team of 5 designers and 3 content writers for a workshop series held on 27-30 May 2021</li>
+                          <li>Designed 13 design (5 multi-post banner, 6 reusable, 2 certificate template), final result totalled at 48 Instagram post</li>
+                        </ul>
+                      </div>
+                    </details>
+                  </div>
+                  <div class="">
+                    <details class="">
+                      <summary class="ml-5 experience-summary">
+                        <span class="sub-experience-title">Web Developer</span>
+                        <div>
+                          <span class="experience-subtitle">Overseas Indonesian Students' Alliance Association, Remote</span>
+                          <span class="experience-subtitle">08/2020 – 09/2021</span>
+                        </div>
+                      </summary>
+                      <div class="experience-expand">
+                        <p>Worked in a team of 5 developer in creating the ppi.id website from scratch in a 2 month period</p>
+                      </div>
+                    </details>
+                  </div>
+                </div>
+                <!-- end of PPID -->
+                <!-- RPPID -->
+                <div class="">
+                  <details class="">
+                    <summary class="experience-summary">
+                      <span class="experience-title">Mobile and Web Manager</span>
+                      <div>
+                        <span class="experience-subtitle">OISAA Radio, Remote</span>
+                        <span class="experience-subtitle">08/2021 – 09/2022</span>
+                      </div>
+                    </summary>
+                    <div class="experience-expand">
+                      <ul class="ml-5 list-disc">
+                        <li>Supervised a team of 5 developers maintaining the radioppidunia.org website</li>
+                        <li>Significant task include leading the hosting migration and rebuilding of the website in a span of 1 month period as part of website renewal</li>
+                      </ul>
+                    </div>
+                  </details>
+                </div>
+                <div class="">
+                  <details class="">
+                    <summary class="ml-5 experience-summary">
+                      <span class="sub-experience-title">Mobile and Web Developer</span>
+                      <div>
+                        <span class="experience-subtitle">OISAA Radio, Remote</span>
+                        <span class="experience-subtitle">02/2020 – 07/2021</span>
+                      </div>
+                    </summary>
+                  </details>
+                </div>
+                <!-- end of RPPID -->
+                <!-- GDSC -->
+                <div class="">
+                  <details class="">
+                    <summary class="experience-summary">
+                      <span class="experience-title">Google DSC Lead</span>
+                      <div>
+                        <span class="experience-subtitle">Google Developer Students Club, Kuala Lumpur, Malaysia </span>
+                        <span class="experience-subtitle">06/2021 – 08/2022 </span>
+                      </div>
+                    </summary>
+                    <div class="experience-expand">
+                      <ul class="ml-5 list-disc">
+                        <li>Lead the Asia Pacific University chapter (GDSC APU) consisting of 14 core team member with 75+ chapter member</li>
+                        <li>Organized 7 events (4 workshops on current industry technology and 3 info sessions)</li>
+                      </ul>
+                    </div>
+                  </details>
+                </div>
+                <div class="">
+                  <details class="">
+                    <summary class="ml-5 experience-summary">
+                      <span class="sub-experience-title">Google DSC Core Team Member </span>
+                      <div>
+                        <span class="experience-subtitle">Google Developer Students Club, Kuala Lumpur, Malaysia </span>
+                        <span class="experience-subtitle">02/2020 – 10/2021 </span>
+                      </div>
+                    </summary>
+                  </details>
+                </div>
+                <!-- end of GDSC -->
+                <!-- YCP -->
+                <div class="">
+                  <details class="">
+                    <summary class="experience-summary">
+                      <span class="experience-title">Full Stack Software Engineer Intern</span>
+                      <div>
+                        <span class="experience-subtitle">YCP Solidiance, Surabaya, East Java, Indonesia</span>
+                        <span class="experience-subtitle">12/2019 – 02/2020</span>
+                      </div>
+                    </summary>
+                    <div class="experience-expand">
+                      <ul class="ml-5 list-disc">
+                        <li>Worked with the software development team, attended weekly meetings and bonding session</li>
+                        <li>Completed task of developing a work ticket system with email notification and file attachment capability in the 16 week internship period</li>
+                      </ul>
+                    </div>
+                  </details>
+                </div>
+                <!-- end of YCP -->
+                <!-- TA -->
+                <div class="">
+                  <details class="">
+                    <summary class="experience-summary">
+                      <span class="experience-title">Technical Assistant</span>
+                      <div>
+                        <span class="experience-subtitle">Asia Pacific University, Kuala Lumpur, Malaysia</span>
+                        <span class="experience-subtitle">12/2019 – 02/2020</span>
+                      </div>
+                    </summary>
+                    <div class="experience-expand">
+                      <ul class="ml-5 list-disc">
+                        <li>Completed 1 month of training and 2 month of TA work then stopped due to University remote learning policy</li>
+                        <li>As a technical assistant student staff, I'm responsible for IT support, maintenance of labs, update and upgrade for both software and hardware</li>
+                        <li>Highlighted task include working as a small team to upgrade the hardware of hundreds of campus's lab PC at once</li>
+                      </ul>
+                    </div>
+                  </details>
+                </div>
+                <!-- end of TA -->
+              </div>
+              <!-- end of Exprerience -->
+            </div>
+          </div>
+        </section>
+        <!-- end of Experience -->
+        <!-- Background -->
+        <section id="education" class="min-h-[35rem] flex flex-col justify-center snap-center h-screen sm:max-w-[35rem]">
+          <!-- Education -->
+          <div class="mb-8">
+            <h2 class="text-white text-4xl sm:text-5xl mb-6 items-left">Education</h2>
+            <!-- APU -->
+            <div class="flex flex-col mb-4">
+              <span class="text-white text-2xl font-semibold">Bachelor (Honors) of Computer Science, APU, Kuala Lumpur, Malaysia</span>
+              <div class="flex justify-between">
+                <span class="text-white select-none flex flex-col text-sm">First Class CGPA, with A+ Final Year Project</span>
+                <span class="text-white select-none flex flex-col text-sm">09/2019 - 09/2022</span>
+              </div>
+            </div>
+            <!-- end of APU -->
+            <!-- Udacity -->
+            <div class="flex flex-col mb-4">
+              <span class="text-white text-2xl font-semibold">Full Stack Web Developer Certificate, Udacity, Inc</span>
+              <div class="flex justify-between">
+                <span class="text-white select-none flex flex-col text-sm">From Udacity Full Stack Web Developer Nanodegree Program</span>
+                <span class="text-white select-none flex flex-col text-sm">02/2021 - 03/2021</span>
+              </div>
+            </div>
+            <!-- end of Udacity -->
+          </div>
+          <!-- end of Education -->
+          <!-- Certification -->
+          <div class="text-right">
+            <h2 class="text-white text-4xl sm:text-4xl mb-6">Certification</h2>
+            <!-- APU -->
+            <div class="flex flex-col mb-4">
+              <span class="text-white text-2xl font-semibold">Microsoft Certified Azure Fundamentals (AZ-900)</span>
+              <span class="text-white select-none flex flex-col text-sm">Issued Jun 2021</span>
+            </div>
+            <!-- end of APU -->
+            <!-- Udacity -->
+            <div class="flex flex-col mb-4">
+              <span class="text-white text-2xl font-semibold">Microsoft Malaysia Student Accelerator Program 2020</span>
+              <span class="text-white select-none flex flex-col text-sm">Issued Feb 2021</span>
+            </div>
+            <!-- end of Udacity -->
+          </div>
+          <!-- end of Certification -->
+        </section>
+        <!-- end of Background -->
+        <!-- Projects -->
+        <section id="projects" class="min-h-[35rem] flex items-left flex-col sm:snap-center sm:min-h-screen sm:justify-center h-fit">
+          <h2 class="text-white mb-8 sm:mb-6 text-5xl sm:text-5xl snap-start pt-24 sm:pt-0 sm:snap-align-none">Projects</h2>
+          <div class="grid xl:grid-cols-3 sm:grid-cols-2 gap-2">
+            <details class="project-card">
+              <summary>
+                <div class="p-5">
+                  <h4>VinChat: Chatbot Creator Platform</h4>
+                  <h5>React JS, Flask</h5>
+                  <p class="mb-5 text-sm text-gray-700 dark:text-gray-400">For the Final Year Project of APU BSc degree, awarded A+</p>
+                  <a class="items-center py-2 px-5 font-mediumtext-sm text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300">Details</a>
+                </div>
+              </summary>
+              <div class="project-card-expand">
+                <p class="">
+                  For the Final Year Project of APU BSc degree, awarded A+. VinChat is a web based platform which allows users to develop a chatbot through full GUI assistance, and the ability to download and distribute chatbot products as
+                  a file
+                </p>
+              </div>
+            </details>
+            <details class="project-card">
+              <summary>
+                <div class="p-5">
+                  <h4 class="py-2">Food Cam</h4>
+                  <h5>Flutter</h5>
+                  <p>Took the role as the sole mobile developer, made for IIAM 2021, awarded a silver medal</p>
+                  <a>Details</a>
+                </div>
+              </summary>
+              <div class="project-card-expand">
+                <p class="">Food Cam is a mobile app that utilizes Machine Learning to identify restricted ingredients in food based on common recipes</p>
+              </div>
+            </details>
+            <details class="project-card">
+              <summary>
+                <div class="p-5">
+                  <h4 class="py-2">FPS Game Development</h4>
+                  <h5>Unreal Engine</h5>
+                  <p>A First Person Shooter game developed using Unreal Engine 4</p>
+                  <a>Details</a>
+                </div>
+              </summary>
+              <div class="project-card-expand">
+                <p class="">A First Person Shooter game developed using Unreal Engine 4 developed on-off as a hobby, final result are showcased in the YouTube Link</p>
+              </div>
+            </details>
+            <details class="project-card pb-3 sm:pb-0 snap-end sm:snap-align-none">
+              <summary>
+                <div class="p-5">
+                  <h4 class="py-2">Food Ordering Apps</h4>
+                  <h5>Microsoft Power Apps</h5>
+                  <p>Simple food ordering apps</p>
+                  <a>Details</a>
+                </div>
+              </summary>
+              <div class="project-card-expand">
+                <p class="">
+                  Associated with MMSA2020. In this project I take role as sole programmer/ developer except for design. A working power apps capable of ordering food from various vendors, and for vendors to login. This project utilizes
+                  google sheets as database.
+                </p>
+              </div>
+            </details>
+          </div>
+        </section>
+        <!-- end of Projects -->
+        <!-- Contact -->
+        <section id="contact" class="min-h-[25rem] h-screen bg-black flex justify-center items-left flex-col pt-16">
+          <h2 class="text-white mb-10 text-5xl sm:text-5xl">Contact</h2>
+          <div class="flex flex-row items-center mb-5">
+            <!-- <a href="mailto:valiant.kalvin@gmail.com"></a> -->
+            <a target="_blank" href="mailto:valiant.kalvin@gmail.com" class="cursor-pointer">
+              <svg
+                fill="#ffffff"
+                class="mr-10"
+                width="50"
+                height="50"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 122.88 122.88"
+                shape-rendering="geometricPrecision"
+                text-rendering="geometricPrecision"
+                image-rendering="optimizeQuality"
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+              >
+                <path
+                  class="cls-1"
+                  d="M61.44,0A61.44,61.44,0,1,1,0,61.44,61.44,61.44,0,0,1,61.44,0ZM30.73,38,62,63.47,91.91,38Zm-2,42.89L51,58.55,28.71,40.39V80.87ZM53.43,60.55l-22.95,23H92.21l-21.94-23L63,66.71h0a1.57,1.57,0,0,1-2,0l-7.59-6.19Zm19.24-2,21.5,22.54V40.19L72.67,58.51Z"
+                />
+              </svg>
+            </a>
+            <span class="text-xl text-white">valiant.kalvin@gmail.com</span>
+          </div>
+          <div class="flex flex-row items-center mb-5">
+            <!-- href="https://wa.me/6289623280555" -->
+            <a target="_blank" href="https://wa.me/6289623280555" class="cursor-pointer">
+              <svg
+                fill="#ffffff"
+                class="mr-10"
+                width="50"
+                height="50"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 3333 3333"
+                shape-rendering="geometricPrecision"
+                text-rendering="geometricPrecision"
+                image-rendering="optimizeQuality"
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+              >
+                <path
+                  d="M1667 0c920 0 1667 746 1667 1667 0 920-746 1667-1667 1667C747 3334 0 2588 0 1667 0 747 746 0 1667 0zm700 952c-175-175-407-271-655-271-510 0-925 415-925 925 0 163 43 322 124 462l-131 480 491-129c135 74 287 113 442 113 510 0 925-415 925-925 0-247-96-480-271-655zm-654 1424c-138 0-274-37-392-107l-28-17-291 76 78-284-18-29c-77-122-118-264-118-409 0-424 345-769 770-769 205 0 399 80 544 225 145 146 225 338 225 544 0 424-345 770-769 770zm422-576c-23-12-137-67-158-75s-37-12-52 12c-15 23-60 75-73 91-14 15-27 18-50 6s-98-36-186-115c-69-61-115-137-129-160s-2-36 10-47c11-10 23-27 35-41s15-23 23-39c8-15 4-29-2-41s-52-125-71-172c-19-45-38-39-52-40s-29-1-44-1-40 6-62 29c-21 23-81 79-81 193s83 224 94 239c12 15 163 249 395 349 55 24 98 38 132 49 55 17 106 15 146 9 44-7 137-56 156-110s19-100 14-110-21-16-44-28z"
+                />
+              </svg>
+            </a>
+            <span class="text-xl text-white">+62 896 2328 0555</span>
+          </div>
+          <div class="flex flex-row items-center mb-5">
+            <!-- href="https://linkedin.com/in/kalvinvaliant" -->
+            <a target="_blank" href="https://linkedin.com/in/kalvinvaliant" class="cursor-pointer">
+              <svg
+                width="50"
+                height="50"
+                fill="#ffffff"
+                class="mr-10"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 3333 3333"
+                shape-rendering="geometricPrecision"
+                text-rendering="geometricPrecision"
+                image-rendering="optimizeQuality"
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+              >
+                <path
+                  d="M1667 0c920 0 1667 746 1667 1667 0 920-746 1667-1667 1667C747 3334 0 2588 0 1667 0 747 746 0 1667 0zm-215 1336h342v175h5c48-86 164-175 338-175 361 0 428 225 428 517v596h-357v-528c0-126-3-288-186-288-186 0-214 137-214 279v537h-357V1336zm-247-309c0 102-83 186-186 186-102 0-186-83-186-186 0-102 83-186 186-186 102 0 186 83 186 186zm-371 309h371v1113H834V1336z"
+                />
+              </svg>
+            </a>
+            <span class="text-xl text-white">linkedin.com/in/kalvinvaliant/</span>
+          </div>
+          <div class="flex flex-row items-center mb-5">
+            <!-- href="https://github.com/kvaliant" -->
+            <a target="_blank" href="https://github.com/kvaliant" class="cursor-pointer">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="50"
+                height="50"
+                shape-rendering="geometricPrecision"
+                text-rendering="geometricPrecision"
+                image-rendering="optimizeQuality"
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                viewBox="0 0 640 640"
+                fill="#ffffff"
+                class="mr-10"
+              >
+                <path
+                  d="M319.988 7.973C143.293 7.973 0 151.242 0 327.96c0 141.392 91.678 261.298 218.826 303.63 16.004 2.964 21.886-6.957 21.886-15.414 0-7.63-.319-32.835-.449-59.552-89.032 19.359-107.8-37.772-107.8-37.772-14.552-36.993-35.529-46.831-35.529-46.831-29.032-19.879 2.209-19.442 2.209-19.442 32.126 2.245 49.04 32.954 49.04 32.954 28.56 48.922 74.883 34.76 93.131 26.598 2.882-20.681 11.15-34.807 20.315-42.803-71.08-8.067-145.797-35.516-145.797-158.14 0-34.926 12.52-63.485 32.965-85.88-3.33-8.078-14.291-40.606 3.083-84.674 0 0 26.87-8.61 88.029 32.8 25.512-7.075 52.878-10.642 80.056-10.76 27.2.118 54.614 3.673 80.162 10.76 61.076-41.386 87.922-32.8 87.922-32.8 17.398 44.08 6.485 76.631 3.154 84.675 20.516 22.394 32.93 50.953 32.93 85.879 0 122.907-74.883 149.93-146.117 157.856 11.481 9.921 21.733 29.398 21.733 59.233 0 42.792-.366 77.28-.366 87.804 0 8.516 5.764 18.473 21.992 15.354 127.076-42.354 218.637-162.274 218.637-303.582 0-176.695-143.269-319.988-320-319.988l-.023.107z"
+                />
+              </svg>
+            </a>
+            <span class="text-xl text-white">github.com/kvaliant/</span>
+          </div>
+        </section>
+      </section>
+      <div class="bg-gray-800 w-full snap-end z-[99999]" id="footer">
+        <div class="flex h-16 items-center justify-center text-md text-gray-300">
+          <p class="text-md">
+            Made using <span class="underline text-blue-500"><a target="_blank" href="https://tailwindcss.com/">Tailwind CSS</a></span> by <span class="underline text-blue-500"><a href="#home">Kalvin Valiant</a></span>
+          </p>
+        </div>
+      </div>
+    </section>
+    <!-- end of Contact -->
+  </body>
+
+  <script>
+    const hamburger = document.querySelector("#hamburger");
+    const mobileMenu = document.querySelector("#mobile-menu");
+    const html = document.querySelector("html");
+
+    const openNavbarIcon = document.querySelector("#open-navbar-icon");
+    const closeNavbarIcon = document.querySelector("#close-navbar-icon");
+
+    hamburger.addEventListener("click", function () {
+      hamburger.classList.toggle("hamburger-active");
+      mobileMenu.classList.toggle("hidden");
+      openNavbarIcon.classList.toggle("hidden");
+      closeNavbarIcon.classList.toggle("hidden");
+    });
+
+    window.addEventListener("click", function (e) {
+      if (e.target != hamburger && e.target != mobileMenu && e.target != openNavbarIcon && e.target != closeNavbarIcon) {
+        hamburger.classList.remove("hamburger-active");
+        mobileMenu.classList.add("hidden");
+        openNavbarIcon.classList.remove("hidden");
+        closeNavbarIcon.classList.add("hidden");
+      }
+    });
+  </script>
+</html>
